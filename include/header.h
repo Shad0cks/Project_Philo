@@ -24,6 +24,8 @@ typedef struct s_data
     int number_of_philosophers;
     int philosopher_must_eat;
     t_philo *philo_l;
+    int index;
+    pthread_mutex_t someoneDie;
 }	t_data;
 
 void init_data(char **argv, t_data *data);
