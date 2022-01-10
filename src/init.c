@@ -9,6 +9,8 @@ void init_data(char **argv, t_data *data)
     data->time_to_die = ft_atoi(argv[2]);
     data->time_to_eat = ft_atoi(argv[3]);
     data->time_to_sleep = ft_atoi(argv[4]);
+    pthread_mutex_init(&data->someoneDie, NULL);
+    pthread_mutex_lock(&data->someoneDie);
     if (argv[5])
         data->philosopher_must_eat = ft_atoi(argv[5]);
     else 
