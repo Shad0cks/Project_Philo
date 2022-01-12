@@ -13,8 +13,10 @@ void init_data(char **argv, t_data *data)
         data->philosopher_must_eat = ft_atoi(argv[5]);
     else 
         data->philosopher_must_eat = -1;
-    data->philo_l = malloc(sizeof(t_philo) * data->number_of_philosophers);
-	data->fork_l = malloc(sizeof(pthread_mutex_t) * data->number_of_philosophers);
+    data->philo_l = malloc(sizeof(t_philo) * (data->number_of_philosophers));
+	data->fork_l = malloc(sizeof(pthread_mutex_t) * (data->number_of_philosophers));
+	pthread_mutex_init(&(data->someone_die), NULL);
+	pthread_mutex_init(&(data->perso_lock), NULL);
     if (!data->philo_l || !data->fork_l)
         exit(EXIT_FAILURE);
 	while (++i < data->number_of_philosophers)
@@ -41,7 +43,6 @@ void init_philo(t_data *data)
         else
             temp.lfork = i + 1;
         data->philo_l[i - 1] = temp;
-        pthread_mutex_init(&(data->philo_l[i - 1].perso_lock), NULL);
 		i++;
     }
 }

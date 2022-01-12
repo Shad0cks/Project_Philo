@@ -29,5 +29,7 @@ uint64_t get_actual_time(uint64_t time)
 
 void type_message(t_philo *philo, int type, uint64_t time)
 {
+	pthread_mutex_lock(&philo->data->perso_lock);
 	printf("%llu %d%s", get_actual_time(time), philo->id, message_type(type));
+	pthread_mutex_unlock(&philo->data->perso_lock);
 }

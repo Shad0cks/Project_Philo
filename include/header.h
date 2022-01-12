@@ -22,7 +22,6 @@ typedef struct s_philo
 	int isEating;
     uint64_t tbeforedie;
     int countmeal;
-	pthread_mutex_t perso_lock;
 	struct s_data *data;
 }	t_philo;
 
@@ -34,6 +33,8 @@ typedef struct s_data
     int number_of_philosophers;
     int philosopher_must_eat;
 	uint64_t time_start;
+	pthread_mutex_t someone_die;
+	pthread_mutex_t perso_lock;
     t_philo *philo_l;
 	pthread_mutex_t *fork_l;
 }	t_data;

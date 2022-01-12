@@ -1,5 +1,24 @@
 #include "../include/header.h"
 
+void actu_dead(t_data *data)
+{
+	int i;
+
+	i = 0;
+
+	while(i < data->number_of_philosophers)
+	{	
+		//pthread_mutex_lock(&data->someone_die);
+		data->philo_l[i].tbeforedie -= 1;
+		if (data->philo_l[i].tbeforedie <= 0)
+		{
+			type_message(&data->philo_l[i], DIE, data->time_start);
+			exit(0);
+		}
+		//pthread_mutex_unlock(&data->someone_die);
+		i++;
+	}
+}
 
 void *start_sim(void *philo)
 {
@@ -39,7 +58,10 @@ int main(int argc, char *argv[])
     init_data(argv, &data);
     init_philo(&data);
 	create_lthread(&data);
-    for(long y = 0; y < 10000000000; y++);
-	debug_philo(&data);
+	while(1)
+	{
+		actu_dead(&data);
+		ft_usleep(1);
+	}
 	return (0);
 }
