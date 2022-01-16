@@ -8,14 +8,14 @@ void actu_dead(t_data *data)
 
 	while(i < data->number_of_philosophers)
 	{	
-		//pthread_mutex_lock(&data->someone_die);
+		pthread_mutex_lock(&data->someone_die);
 		data->philo_l[i].tbeforedie -= 1;
 		if (data->philo_l[i].tbeforedie <= 0)
 		{
 			type_message(&data->philo_l[i], DIE, data->time_start);
 			exit(0);
 		}
-		//pthread_mutex_unlock(&data->someone_die);
+		pthread_mutex_unlock(&data->someone_die);
 		i++;
 	}
 }

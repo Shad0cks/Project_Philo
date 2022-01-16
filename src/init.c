@@ -16,7 +16,7 @@ void init_data(char **argv, t_data *data)
     data->philo_l = malloc(sizeof(t_philo) * (data->number_of_philosophers));
 	data->fork_l = malloc(sizeof(pthread_mutex_t) * (data->number_of_philosophers));
 	pthread_mutex_init(&(data->someone_die), NULL);
-	pthread_mutex_init(&(data->perso_lock), NULL);
+	pthread_mutex_init(&(data->talking), NULL);
     if (!data->philo_l || !data->fork_l)
         exit(EXIT_FAILURE);
 	while (++i < data->number_of_philosophers)

@@ -3,7 +3,9 @@
 void lock_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->fork_l[philo->rfork - 1]);
+	type_message(philo, GFORK, philo->data->time_start);
 	pthread_mutex_lock(&philo->data->fork_l[philo->lfork - 1]);
+	type_message(philo, GFORK, philo->data->time_start);
 }
 
 void unlock_fork(t_philo *philo)
