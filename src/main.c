@@ -1,28 +1,11 @@
 #include "../include/header.h"
 
-void actu_dead(t_data *data)
+void *start_sim(void *philo_v)
 {
-	int i;
+	t_philo *philo;
 
-	i = 0;
-
-	while(i < data->number_of_philosophers)
-	{	
-		pthread_mutex_lock(&data->someone_die);
-		data->philo_l[i].tbeforedie -= 1;
-		if (data->philo_l[i].tbeforedie <= 0)
-		{
-			type_message(&data->philo_l[i], DIE, data->time_start);
-			exit(0);
-		}
-		pthread_mutex_unlock(&data->someone_die);
-		i++;
-	}
-}
-
-void *start_sim(void *philo)
-{
-	while(1)
+	philo = (t_philo*)philo_v;
+	while(*philo->sstop == 0)
 	{
 		eat(philo);
 		philo_sleep(philo);
@@ -32,19 +15,42 @@ void *start_sim(void *philo)
 
 void create_lthread(t_data *data)
 {
-    pthread_t thread;
     int i;
 
     i = 0;
-	data->time_start = get_time();
     while(i < data->number_of_philosophers)
     {
-        if(pthread_create(&thread, NULL, start_sim, &data->philo_l[i]) != 0)
-            exit(EXIT_FAILURE);
-        pthread_detach(thread);
+		if (i % 2 == 0)
+        	pthread_create(&data->philo_l[i].self_thread, NULL, start_sim, &data->philo_l[i]);
         i++;
     }
-    
+	ft_usleep(1);
+    i = 0;
+	while(i < data->number_of_philosophers)
+    {
+		if (i % 2 == 1)
+        	pthread_create(&data->philo_l[i].self_thread, NULL, start_sim, &data->philo_l[i]);
+        i++;
+    }
+	return;
+}
+
+void death_create(t_data *data)
+{
+	int i;
+	pthread_t death_thread;
+
+    i = 0;
+	data->time_start = get_time();
+	create_lthread(data);
+	pthread_create(&death_thread, NULL, death_loop, data);
+
+	while (i < data->number_of_philosophers)
+	{
+		pthread_join(data->philo_l[i].self_thread, NULL);
+		i++;
+	}
+	pthread_join(death_thread, NULL);
 }
 
 int main(int argc, char *argv[])
@@ -57,11 +63,6 @@ int main(int argc, char *argv[])
         return (1);
     init_data(argv, &data);
     init_philo(&data);
-	create_lthread(&data);
-	while(1)
-	{
-		actu_dead(&data);
-		ft_usleep(1);
-	}
+	death_create(&data);
 	return (0);
 }

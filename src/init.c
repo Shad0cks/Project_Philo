@@ -5,6 +5,7 @@ void init_data(char **argv, t_data *data)
 	int i;
 
 	i = -1;
+    data->stop = 0;
     data->number_of_philosophers = ft_atoi(argv[1]);
     data->time_to_die = ft_atoi(argv[2]);
     data->time_to_eat = ft_atoi(argv[3]);
@@ -15,7 +16,6 @@ void init_data(char **argv, t_data *data)
         data->philosopher_must_eat = -1;
     data->philo_l = malloc(sizeof(t_philo) * (data->number_of_philosophers));
 	data->fork_l = malloc(sizeof(pthread_mutex_t) * (data->number_of_philosophers));
-	pthread_mutex_init(&(data->someone_die), NULL);
 	pthread_mutex_init(&(data->talking), NULL);
     if (!data->philo_l || !data->fork_l)
         exit(EXIT_FAILURE);
@@ -32,10 +32,10 @@ void init_philo(t_data *data)
     while (i <= data->number_of_philosophers)
     {
         temp.id = i;
-        temp.isdead = 0;
+        temp.sstop = &data->stop;
 		temp.isEating = 0;
         temp.countmeal = 0;
-        temp.tbeforedie = data->time_to_die;
+        temp.tbeforedie = get_time();
         temp.rfork = i;
 		temp.data = data;
 		if (i + 1 > data->number_of_philosophers)
@@ -56,7 +56,6 @@ void debug_philo(t_data *data)
     {
         printf("=================================\n");
         printf("Philo id : %d \n", data->philo_l[i].id);
-        printf("Philo isDead : %d \n", data->philo_l[i].isdead);
         printf("Philo lfork : %d \n", data->philo_l[i].lfork);
         printf("Philo rfork : %d \n", data->philo_l[i].rfork);
         printf("Philo time Before Die : %llu \n", data->philo_l[i].tbeforedie);

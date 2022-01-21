@@ -16,14 +16,14 @@
 typedef struct s_philo
 {
     int id;
+    pthread_t self_thread;
+    int *sstop;
 	int lfork;
     int rfork;
-    int isdead;
 	int isEating;
     uint64_t tbeforedie;
     int countmeal;
 	struct s_data *data;
-	pthread_mutex_t someone_die;
 }	t_philo;
 
 typedef struct s_data
@@ -34,10 +34,10 @@ typedef struct s_data
     int number_of_philosophers;
     int philosopher_must_eat;
 	uint64_t time_start;
-	pthread_mutex_t someone_die;
 	pthread_mutex_t talking;
     t_philo *philo_l;
 	pthread_mutex_t *fork_l;
+    int stop;
 }	t_data;
 
 void init_data(char **argv, t_data *data);
@@ -55,5 +55,6 @@ void philo_sleep(t_philo *philo);
 int	ft_atoi(const char *str);
 
 void eat(t_philo *philo);
+void *death_loop(void *data);
 
 #endif
