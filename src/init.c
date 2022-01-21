@@ -6,12 +6,12 @@ void init_data(char **argv, t_data *data)
 
 	i = -1;
     data->stop = 0;
-    data->number_of_philosophers = ft_atoi(argv[1]);
+    data->number_of_philosophers = (int)ft_atoi(argv[1]);
     data->time_to_die = ft_atoi(argv[2]);
     data->time_to_eat = ft_atoi(argv[3]);
     data->time_to_sleep = ft_atoi(argv[4]);
     if (argv[5])
-        data->philosopher_must_eat = ft_atoi(argv[5]);
+        data->philosopher_must_eat = (int)ft_atoi(argv[5]);
     else 
         data->philosopher_must_eat = -1;
     data->philo_l = malloc(sizeof(t_philo) * (data->number_of_philosophers));

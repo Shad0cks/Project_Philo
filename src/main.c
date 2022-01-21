@@ -3,14 +3,17 @@
 void *start_sim(void *philo_v)
 {
 	t_philo *philo;
+	int i;
 
+	i = 0;
 	philo = (t_philo*)philo_v;
 	while(*philo->sstop == 0)
 	{
 		eat(philo);
+		philo->countmeal += 1;
 		philo_sleep(philo);
 	}
-    return NULL; 
+    return NULL;
 }
 
 void create_lthread(t_data *data)

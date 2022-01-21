@@ -24,3 +24,18 @@ void eat(t_philo *philo)
 	philo->isEating = 0;
 	unlock_fork(philo);
 }
+
+int stop_meal(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < data->number_of_philosophers)
+	{
+		if (data->philo_l[i].countmeal < data->philosopher_must_eat)
+			return (0);
+		i++;
+	}
+	return (1);
+	
+}

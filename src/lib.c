@@ -1,9 +1,9 @@
 #include "../include/header.h"
 
-int	ft_atoi(const char *str)
+uint64_t	ft_atoi(const char *str)
 {
-	int	neg;
-	int	nb;
+	uint64_t	neg;
+	int			nb;
 
 	neg = 1;
 	nb = 0;

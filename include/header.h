@@ -52,9 +52,10 @@ void type_message(t_philo *philo, int type, uint64_t time);
 void ft_usleep(uint64_t obj);
 void philo_sleep(t_philo *philo);
 
-int	ft_atoi(const char *str);
+uint64_t	ft_atoi(const char *str);
 
 void eat(t_philo *philo);
 void *death_loop(void *data);
+int stop_meal(t_data *data);
 
 #endif
