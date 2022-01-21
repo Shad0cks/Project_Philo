@@ -12,7 +12,7 @@ void *death_loop(void *data_v)
     while (data->stop != 1)
     {
         time = get_time();
-        if (data->time_to_die + data->philo_l[i].tbeforedie < time)
+        if (data->time_to_die + data->philo_l[i].tbeforedie + 1 < time)
 		{
 			data->stop = 1;
             pthread_mutex_lock(&data->talking);
