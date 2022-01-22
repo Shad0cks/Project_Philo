@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   logs.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdeshaye <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/22 23:50:54 by pdeshaye          #+#    #+#             */
+/*   Updated: 2022/01/22 23:55:00 by pdeshaye         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/header.h"
 
-char *message_type(int type)
+char	*message_type(int type)
 {
 	if (type == EATING)
 		return (" is eating\n");
@@ -14,7 +26,7 @@ char *message_type(int type)
 		return (" is thinking\n");
 }
 
-uint64_t get_time()
+uint64_t	get_time(void)
 {
 	static struct timeval	tv;
 
@@ -22,15 +34,16 @@ uint64_t get_time()
 	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));
 }
 
-uint64_t get_actual_time(uint64_t time)
+uint64_t	get_actual_time(uint64_t time)
 {
-	return(get_time() - time);
+	return (get_time() - time);
 }
 
-void type_message(t_philo *philo, int type, uint64_t time)
+void	type_message(t_philo *philo, int type, uint64_t time)
 {
 	pthread_mutex_lock(&philo->data->talking);
 	if (*philo->sstop == 0)
-		printf("%llu %d%s", get_actual_time(time), philo->id, message_type(type));
+		printf("%llu %d%s", get_actual_time(time),
+			philo->id, message_type(type));
 	pthread_mutex_unlock(&philo->data->talking);
 }

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   eat.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdeshaye <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/22 23:48:47 by pdeshaye          #+#    #+#             */
+/*   Updated: 2022/01/22 23:49:29 by pdeshaye         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/header.h"
 
-void lock_fork(t_philo *philo)
+static void	lock_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->fork_l[philo->rfork - 1]);
 	type_message(philo, GFORK, philo->data->time_start);
@@ -8,26 +20,26 @@ void lock_fork(t_philo *philo)
 	type_message(philo, GFORK, philo->data->time_start);
 }
 
-void unlock_fork(t_philo *philo)
+static void	unlock_fork(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->data->fork_l[philo->rfork - 1]);
 	pthread_mutex_unlock(&philo->data->fork_l[philo->lfork - 1]);
 }
 
-void eat(t_philo *philo)
+void	eat(t_philo *philo)
 {
 	lock_fork(philo);
-	philo->isEating = 1;
+	philo->is_eating = 1;
 	type_message(philo, EATING, philo->data->time_start);
 	philo->tbeforedie = get_time();
 	ft_usleep(philo->data->time_to_eat);
-	philo->isEating = 0;
+	philo->is_eating = 0;
 	unlock_fork(philo);
 }
 
-int stop_meal(t_data *data)
+int	stop_meal(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->number_of_philosophers)
@@ -37,5 +49,4 @@ int stop_meal(t_data *data)
 		i++;
 	}
 	return (1);
-	
 }
