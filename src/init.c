@@ -1,11 +1,46 @@
 #include "../include/header.h"
 
+int	is_whine_or_nb(char c)
+{
+	if ((c <= '9' && c >= '0'))
+		return (1);
+	return (0);
+}
+
+void	error_notnb(char **argv)
+{
+	int	i;
+    int j;
+    int end;
+
+    j = 1;
+	i = 0;
+    end = 4;
+    if (argv[5])
+        end = 5;
+    while(j <= end)
+    {
+        i = 0;
+        while (argv[j][i])
+        {
+            if (!(argv[j][i] <= '9' && argv[j][i] >= '0'))
+            {
+                printf("Error : invalid aguments\n");
+                exit(EXIT_FAILURE);
+            }
+            i++;
+        }
+        j++;
+    }
+}
+
 void init_data(char **argv, t_data *data)
 {
 	int i;
 
 	i = -1;
     data->stop = 0;
+    error_notnb(argv);
     data->number_of_philosophers = (int)ft_atoi(argv[1]);
     data->time_to_die = ft_atoi(argv[2]);
     data->time_to_eat = ft_atoi(argv[3]);

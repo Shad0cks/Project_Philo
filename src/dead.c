@@ -33,3 +33,18 @@ void *death_loop(void *data_v)
     }
     return (NULL);
 }
+
+void free_all(t_data *data)
+{
+    int i;
+
+    i = 0;
+    pthread_mutex_destroy(&data->talking);
+    while(i < data->number_of_philosophers)
+    {
+        pthread_mutex_destroy(&data->fork_l[i]);
+        i++;
+    }
+    free(data->fork_l);
+    free(data->philo_l);
+}

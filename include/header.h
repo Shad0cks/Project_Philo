@@ -58,4 +58,6 @@ void eat(t_philo *philo);
 void *death_loop(void *data);
 int stop_meal(t_data *data);
 
+void free_all(t_data *data);
+
 #endif

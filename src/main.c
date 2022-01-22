@@ -67,5 +67,6 @@ int main(int argc, char *argv[])
     init_data(argv, &data);
     init_philo(&data);
 	death_create(&data);
+	free_all(&data);
 	return (0);
 }
