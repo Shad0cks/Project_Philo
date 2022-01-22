@@ -34,6 +34,7 @@ void	error_notnb(char **argv)
     }
 }
 
+
 void init_data(char **argv, t_data *data)
 {
 	int i;
